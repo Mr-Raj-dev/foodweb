@@ -6,11 +6,9 @@ body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
-  background-image: linear-gradient(
-      0deg,
+  background-image: linear-gradient(0deg,
       rgba(250, 250, 250, 0.801),
-      rgba(250, 250, 250, 0.836)
-    ),
+      rgba(250, 250, 250, 0.836)),
     url("../public/images/flat-lay-green-vegetables-fruits.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -72,6 +70,7 @@ nav {
 
   color: white;
 }
+
 #login_btn:hover {
   background-color: rgb(243, 235, 223);
   color: rgb(8, 8, 8);
@@ -246,12 +245,15 @@ footer {
   margin-top: 5rem;
   /* height: 900%; */
 }
+
 .carousel-container .carousel-item img {
   height: 500px;
 }
+
 #food_image {
   width: 50px;
 }
+
 /* Loader */
 
 .loader {
@@ -280,6 +282,7 @@ footer {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -315,6 +318,7 @@ footer {
   font-size: x-small;
   text-align: justify;
 }
+
 #checkout_btn,
 .review-btn {
   background-color: #be521f;
@@ -514,6 +518,7 @@ h2 {
   text-shadow: 2px 2px white;
   letter-spacing: 2px;
 }
+
 .user-info span {
   /* font-weight: 800; */
   /* color: grey; */
@@ -619,7 +624,7 @@ h2 {
   margin-right: 0.3rem;
 }
 
-#sidebar ul li.active > a,
+#sidebar ul li.active>a,
 a[aria-expanded="true"] {
   color: #fff;
   background: #232f3e;
@@ -721,6 +726,7 @@ ul.CTAs a {
   color: #078347;
   text-align: justify;
 }
+
 #view_detail {
   color: #078347;
 }
@@ -744,17 +750,21 @@ ul.CTAs a {
 .slide-in-right-enter {
   transform: translateX(100%);
 }
+
 .slide-in-right-enter-active {
   transform: translateX(0);
   transition: transform 300ms ease-in-out;
 }
+
 .slide-in-right-exit {
   transform: translateX(0);
 }
+
 .slide-in-right-exit-active {
   transform: translateX(100%);
   transition: transform 300ms ease-in-out;
 }
+
 .orderdetai {
   background-color: #be521f;
   color: #be521f;
@@ -766,11 +776,13 @@ ul.CTAs a {
 
   padding: 4rem;
 }
+
 .updateprofile {
   background-color: #be511f83;
   color: #080503;
   text-shadow: 2px 1px rgb(231, 219, 219);
 }
+
 .orderdetails {
   background-color: #f0dfd75e;
   color: rgb(5, 5, 5);
@@ -793,6 +805,7 @@ ul.CTAs a {
   text-align: justify;
   font-size: small;
 }
+
 .rest_distance {
   color: rgba(128, 128, 128, 0.723);
 }
@@ -833,15 +846,19 @@ ul.CTAs a {
     stroke-dashoffset: 0;
   }
 }
+
 @keyframes scale {
+
   0%,
   100% {
     transform: none;
   }
+
   50% {
     transform: scale3d(1.1, 1.1, 1);
   }
 }
+
 @keyframes fill {
   100% {
     box-shadow: inset 0px 0px 0px 60px #7ac142;
@@ -860,6 +877,7 @@ ul.CTAs a {
   cursor: pointer;
   width: 100%;
 }
+
 .coupan_icon {
   border: 1px solid #080503;
   border-radius: 50%;
@@ -901,17 +919,22 @@ ul.CTAs a {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black overlay */
-  z-index: 999; /* Make the overlay appear on top of everything else */
-  display: none; /* Initially hidden */
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Semi-transparent black overlay */
+  z-index: 999;
+  /* Make the overlay appear on top of everything else */
+  display: none;
+  /* Initially hidden */
 }
 
 .overlay.active {
-  display: block; /* Show the overlay when active class is applied */
+  display: block;
+  /* Show the overlay when active class is applied */
 }
 
 .confirm-order-container.blurred {
-  filter: blur(4px); /* Apply blur when the class is added */
+  filter: blur(4px);
+  /* Apply blur when the class is added */
 }
 
 .sort_rate,
@@ -920,9 +943,11 @@ ul.CTAs a {
   border: none;
   background-color: transparent;
 }
+
 .sort {
   text-align: right;
 }
+
 .sort_rate:focus,
 .sort_rev:focus,
 .sort_veg:focus {
