@@ -1,12 +1,12 @@
 import React from "react";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 
-export default function FoodItem() {
+export default function FoodItem({ fooditem }) {
   return (
     <div className="col-sm-12 col-md-6 col-lg-3 my-3">
       <div className="card p-3 rounded">
         <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpvQ9Rxxg7dtKGh98IWaBQsyHzzkuljxOigA&s"
+          src={fooditem.images[0].url}
           alt="Pizza"
           className="card-img-top mx-auto"
         />

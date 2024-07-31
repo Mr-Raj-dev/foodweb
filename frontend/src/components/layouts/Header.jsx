@@ -1,12 +1,15 @@
 import React from "react";
 import Search from "./Search";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
     <nav className="navbar row sticky-top">
       {/* logo */}
       <div className="col-12 col-md-3">
-        <img src="/images/logo.webp" alt="logo" className="logo" />
+        <Link to="/">
+          <img src="/images/logo.webp" alt="logo" className="logo" />
+        </Link>
       </div>
       {/* Search Bar and Search Icon */}
       <div className="col-12 col-md-6 mt-2 mt-md-6">
@@ -19,7 +22,7 @@ export default function Header() {
         <span className="ml-1" id="cart_count">
           0
         </span>
-        {10 < 5 ? (
+        {10 > 5 ? (
           <>
             <div className="ml-4 dropdown d-inline">
               <figure className="avatar avatar-nav">
