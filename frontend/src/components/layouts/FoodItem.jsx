@@ -1,9 +1,9 @@
 import React from "react";
-import { useAlert } from "react-alert";
+// import { useAlert } from "react-alert";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 
 export default function FoodItem({ fooditem, restaurant }) {
-  const alert = useAlert();
+  // const alert = useAlert();
 
   return (
     <div className="col-sm-12 col-md-6 col-lg-3 my-3">
