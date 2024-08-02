@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import { useAlert } from "react-alert";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/layouts/Header";
 import Home from "./components/layouts/Home";
