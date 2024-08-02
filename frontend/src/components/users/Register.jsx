@@ -48,7 +48,7 @@ const Register = () => {
     formData.set("name", name);
     formData.set("email", email);
     formData.set("password", password);
-    formData.set("passwordConfoirm", passwordConfirm);
+    formData.set("passwordConfirm", passwordConfirm);
     formData.set("phoneNumber", phoneNumber);
     if (avatar === " ") {
       formData.set("avatar", "images/images.png");
