@@ -17,6 +17,17 @@ import {
     UPDATE_PROFILE_SUCCESS,
     UPDATE_PROFILE_RESET,
     UPDATE_PROFILE_FAIL,
+    UPDATE_PASSWORD_REQUEST,
+    UPDATE_PASSWORD_FAIL,
+    UPDATE_PASSWORD_RESET,
+    UPDATE_PASSWORD_SUCCESS,
+    NEW_PASSWORD_REQUEST,
+    NEW_PASSWORD_FAIL,
+    FORGET_PASSWORD_FAIL,
+    NEW_PASSWORD_SUCCESS,
+    FORGET_PASSWORD_REQUEST,
+    FORGET_PASSWORD_SUCCESS
+
 }
     from "../constants/userConstant";
 
@@ -85,25 +96,29 @@ export const authReducer = (
 };
 
 
-export const userReducer = ((state = {}, action) => {
+export const userReducer = (state = {}, action) => {
     switch (action.type) {
         case UPDATE_PROFILE_REQUEST:
+        case UPDATE_PASSWORD_REQUEST:
             return {
                 ...state,
                 loading: true,
             };
         case UPDATE_PROFILE_SUCCESS:
+        case UPDATE_PASSWORD_SUCCESS:
             return {
                 ...state,
-                loading: true,
+                loading: false,
                 isUpdated: action.payload,
             };
         case UPDATE_PROFILE_RESET:
+        case UPDATE_PASSWORD_RESET:
             return {
                 ...state,
                 isUpdated: false,
             };
         case UPDATE_PROFILE_FAIL:
+        case UPDATE_PASSWORD_FAIL:
             return {
                 ...state,
                 error: action.payload,
@@ -116,7 +131,47 @@ export const userReducer = ((state = {}, action) => {
             };
         default:
             return state;
-
-
     }
-});
+};
+
+
+export const forgetPasswordReducer = (state = {}, action) => {
+    switch (action.type) {
+        case FORGET_PASSWORD_REQUEST:
+        case NEW_PASSWORD_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: null,
+            };
+        case NEW_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                success: action.payload,
+            };
+        case FORGET_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                message: action.payload,
+            };
+        case FORGET_PASSWORD_FAIL:
+        case NEW_PASSWORD_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
+            };
+        default:
+            return state;
+    }
+};
+
+
+
+

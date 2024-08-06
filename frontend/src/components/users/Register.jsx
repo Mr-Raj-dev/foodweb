@@ -68,7 +68,11 @@ const Register = () => {
           setAvatar(reader.result);
         }
       };
-      reader.readAsDataURL(e.target.file[0]);
+      if (e.target.files && e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+      } else {
+        console.error("No file selected or file input is invalid");
+      }
     } else {
       setUser({ ...user, [e.target.name]: e.target.value });
     }
