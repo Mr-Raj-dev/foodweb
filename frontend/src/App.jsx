@@ -9,6 +9,7 @@ import Login from "./components/users/Login";
 import Register from "./components/users/Register";
 // import Cart from "./components/cart/Cart";
 import Profile from "./components/users/Profile";
+import UpdateProfile from "./components/users/UpdateProfile";
 import store from "./store";
 import { loadUser } from "./actions/userAction";
 
@@ -32,6 +33,7 @@ export default function App() {
             <Route path="/users/login" element={<Login />} />
             <Route path="/users/signup" element={<Register />} />
             <Route path="/users/me" element={<Profile />} />
+            <Route path="/users/me/update" element={<UpdateProfile />} />
           </Routes>
         </div>
 

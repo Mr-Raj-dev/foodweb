@@ -12,7 +12,10 @@ import {
     LOAD_USER_REQUEST,
     LOAD_USER_SUCCESS,
     LOGOUT_SUCCESS,
-    LOGOUT_FAIL
+    LOGOUT_FAIL,
+    UPDATE_PROFILE_SUCCESS,
+    UPDATE_PROFILE_REQUEST,
+    UPDATE_PROFILE_FAIL
 } from "../constants/userConstant"
 import { CLEAR_ERRORS } from "../constants/restaurantConstant";
 
@@ -81,6 +84,33 @@ export const loadUser = () => async (dispatch) => {
 
     }
 };
+
+//UPDATE USER
+export const updateProfile = (userData) => async (dispatch) => {
+    try {
+        dispatch({ type: UPDATE_PROFILE_REQUEST });
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+
+            },
+        };
+
+        const { data } = await axios.put(
+            "/api/v1/users/me/update",
+            userData,
+            config
+        );
+        dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data.success });
+    } catch (error) {
+        dispatch({
+            type: UPDATE_PROFILE_FAIL,
+            payload: ErrorEvent.response.data.message,
+        });
+    }
+};
+
+
 
 //Logout action
 export const logout = () => async (dispatch) => {
