@@ -172,7 +172,7 @@ export const updatePassword = (passwords) => async (dispatch) => {
 };
 
 
-export const forgetPassword = (email) => async (dispatch) => {
+export const forgotPassword = (email) => async (dispatch) => {
     try {
         dispatch({ type: FORGET_PASSWORD_REQUEST });
         const config = {
@@ -181,7 +181,7 @@ export const forgetPassword = (email) => async (dispatch) => {
             },
         };
         const { data } = await axios.post(
-            "/api/v1/users/ForgetPassword",
+            "/api/v1/users/forgetPassword",
             email,
             config
         );
