@@ -86,8 +86,6 @@ export const removeItemFromCart =
                 foodItemId = foodItemId._id;
             }
 
-
-
             const response = await axios.delete(
                 "/api/v1/eats/cart/delete-cart-item",
                 {

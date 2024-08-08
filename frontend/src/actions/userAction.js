@@ -1,6 +1,4 @@
 import axios from "axios";
-// import Headers from "../components/layouts/Header.jsx";
-
 import {
     LOGIN_FAIL,
     LOGIN_SUCCESS,
@@ -26,7 +24,6 @@ import {
     NEW_PASSWORD_REQUEST,
     NEW_PASSWORD_SUCCESS,
     CLEAR_ERRORS,
-
 } from "../constants/userConstant"
 
 //Login
