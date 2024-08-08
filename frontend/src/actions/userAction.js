@@ -19,9 +19,9 @@ import {
     UPDATE_PASSWORD_REQUEST,
     UPDATE_PASSWORD_SUCCESS,
     UPDATE_PASSWORD_FAIL,
-    FORGET_PASSWORD_FAIL,
-    FORGET_PASSWORD_SUCCESS,
-    FORGET_PASSWORD_REQUEST,
+    FORGOT_PASSWORD_FAIL,
+    FORGOT_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_REQUEST,
     NEW_PASSWORD_FAIL,
     NEW_PASSWORD_REQUEST,
     NEW_PASSWORD_SUCCESS,
@@ -174,7 +174,7 @@ export const updatePassword = (passwords) => async (dispatch) => {
 
 export const forgotPassword = (email) => async (dispatch) => {
     try {
-        dispatch({ type: FORGET_PASSWORD_REQUEST });
+        dispatch({ type: FORGOT_PASSWORD_REQUEST });
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -186,12 +186,12 @@ export const forgotPassword = (email) => async (dispatch) => {
             config
         );
         dispatch({
-            type: FORGET_PASSWORD_SUCCESS,
+            type: FORGOT_PASSWORD_SUCCESS,
             payload: data.message,
         });
     } catch (error) {
         dispatch({
-            type: FORGET_PASSWORD_FAIL,
+            type: FORGOT_PASSWORD_FAIL,
             payload: error.response.data.message,
         });
     }

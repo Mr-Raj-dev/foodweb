@@ -11,7 +11,7 @@ const NewPassword = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { error, succes } = useSelector((state) => state.forgotPassword);
+  const { error, success } = useSelector((state) => state.forgotPassword);
   const { token } = useParams();
   const navigate = useNavigate();
 
@@ -20,11 +20,11 @@ const NewPassword = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-    if (succes) {
+    if (success) {
       alert.success("Password updated successfully");
       navigate("/users/login");
     }
-  }, [dispatch, alert, error, succes, navigate]);
+  }, [dispatch, alert, error, success, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -59,7 +59,7 @@ const NewPassword = () => {
                 type="password"
                 id="confirm_password_field"
                 className="form-control"
-                value={password}
+                value={passwordConfirm}
                 onChange={(e) => setPasswordConfirm(e.target.value)}
               />
             </div>
@@ -68,7 +68,6 @@ const NewPassword = () => {
               id="new_password_button"
               type="submit"
               className="btn btn-block py-3"
-              disabled={password ? false : true}
             >
               Set Password
             </button>

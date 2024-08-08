@@ -1,5 +1,10 @@
 import axios from "axios";
-import { ADD_TO_CART, FETCH_CART, UPDATE_CART_ITEM } from "../constants/cartConstant";
+import {
+    ADD_TO_CART,
+    FETCH_CART,
+    UPDATE_CART_ITEM,
+    REMOVE_ITEM_CART
+} from "../constants/cartConstant";
 
 export const fetchCartItems = (alert) => async (dispatch) => {
     try {
@@ -67,3 +72,35 @@ export const updateCartQuantity = (foodItemId, quantity, alert) => async (dispat
 
     }
 };
+
+
+//Remove 
+
+export const removeItemFromCart =
+    (foodItemId) => async (dispatch, getState) => {
+        try {
+            const { user } = getState().auth;
+
+
+            if (typeof foodItemId === "object") {
+                foodItemId = foodItemId._id;
+            }
+
+
+
+            const response = await axios.delete(
+                "/api/v1/eats/cart/delete-cart-item",
+                {
+                    data: { userId: user._id, foodItemId },
+                }
+            );
+            dispatch({
+                type: REMOVE_ITEM_CART,
+                payload: response.data,
+            });
+
+        } catch (error) {
+            alert.error(error.response ? error.response.data.message : error.message);
+        }
+    };
+

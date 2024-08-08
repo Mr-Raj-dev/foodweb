@@ -9,7 +9,7 @@ import { restaurantReducer } from "./reducer/restaurantReducer";
 import { menuReducer } from "./reducer/menuReducer";
 import {
     authReducer,
-    forgetPasswordReducer,
+    forgotPasswordReducer,
     userReducer
 } from "./reducer/userReducer";
 
@@ -19,7 +19,7 @@ const reducer = combineReducers({
     menus: menuReducer,
     auth: authReducer,
     user: userReducer,
-    forgotPassword: forgetPasswordReducer,
+    forgotPassword: forgotPasswordReducer,
 });
 
 const composeenhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||
