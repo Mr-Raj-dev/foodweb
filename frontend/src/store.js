@@ -4,7 +4,7 @@ import {
     applyMiddleware,
     compose,
 } from "redux";
-import thunk from "redux-thunk";
+import { thunk } from "redux-thunk";  // Import named export from redux-thunk
 import { restaurantReducer } from "./reducer/restaurantReducer";
 import { menuReducer } from "./reducer/menuReducer";
 import {
@@ -14,6 +14,7 @@ import {
 } from "./reducer/userReducer";
 import { cartReducer } from "./reducer/cartReducer";
 
+// Combine reducers
 const reducer = combineReducers({
     restaurants: restaurantReducer,
     menus: menuReducer,
@@ -23,14 +24,13 @@ const reducer = combineReducers({
     cart: cartReducer,
 });
 
-const composeenhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||
-    compose;
+// Setup Redux DevTools
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const middleware = [thunk];
-
+// Create store with middleware
 const store = createStore(
     reducer,
-    composeenhancers(applyMiddleware(...middleware))
+    composeEnhancers(applyMiddleware(thunk))
 );
 
-export default store; 
+export default store;
