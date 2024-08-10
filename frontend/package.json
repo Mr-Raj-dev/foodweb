@@ -57,7 +57,7 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://rajchaudar.github.io/T1",
+  "homepage": "https://rajchaudar.github.io/FoodWeb",
   "devDependencies": {
     "gh-pages": "^6.1.1",
     "webpack": "^5.93.0",
