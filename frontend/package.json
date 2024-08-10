@@ -32,8 +32,6 @@
     "web-vitals": "^4.2.3"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -57,9 +55,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://rajchaudar.github.io/FoodWeb/",
+  "proxy": "http://127.0.0.1:4000",
   "devDependencies": {
-    "gh-pages": "^6.1.1",
     "webpack": "^5.93.0",
     "webpack-cli": "^5.1.4"
   }
