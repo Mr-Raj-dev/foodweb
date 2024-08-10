@@ -26,7 +26,7 @@ export default function FoodItem({ fooditem, restaurant }) {
       (item) => item.foodItem._id === fooditem._id
     );
     if (cartItem) {
-      setQuantity(cartItems.quantity);
+      setQuantity(cartItem.quantity);
       setShowButtons(true);
     } else {
       setQuantity(1);
@@ -79,7 +79,7 @@ export default function FoodItem({ fooditem, restaurant }) {
         {/* Heading and Description */}
         <div className="card-body d-flex flex-column">
           <h5 className="card-title">{fooditem.name}</h5>
-          <p className="fooditem_des">{fooditem.description.substring}</p>
+          <p className="fooditem_des">{fooditem.description.substring()}</p>
           <p className="card-text">
             <LiaRupeeSignSolid />
             {fooditem.price}
