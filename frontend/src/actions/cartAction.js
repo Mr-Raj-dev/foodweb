@@ -15,7 +15,7 @@ export const fetchCartItems = (alert) => async (dispatch) => {
         });
 
     } catch (error) {
-        console.error("Fetch carrt error: ", error);
+        console.error("Fetch cart error: ", error);
         if (alert) {
             alert.info("Cart is hungry");
 
