@@ -13,6 +13,11 @@ import {
     userReducer,
 } from "./reducer/userReducer";
 import { cartReducer } from "./reducer/cartReducer";
+import {
+    newOrderReducer,
+    orderDetailsReducer,
+    myOrdersReducer,
+} from "./reducer/orderReducer";
 
 // Combine reducers
 const reducer = combineReducers({
@@ -22,6 +27,9 @@ const reducer = combineReducers({
     user: userReducer,
     forgotPassword: forgotPasswordReducer,
     cart: cartReducer,
+    newOrder: newOrderReducer,
+    myOrders: myOrdersReducer,
+    orderDetails: orderDetailsReducer,
 });
 
 // Setup Redux DevTools

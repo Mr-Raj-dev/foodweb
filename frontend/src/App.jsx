@@ -14,9 +14,12 @@ import ForgotPassword from "./components/users/ForgotPassword";
 import NewPassword from "./components/users/NewPassword";
 import UpdateProfile from "./components/users/UpdateProfile";
 import store from "./store";
+import OrderSuccess from "./components/cart/OrderSuccess";
+import ListOrders from "./components/order/ListOrders";
+import OrderDetails from "./components/order/OrderDetails";
 import { loadUser } from "./actions/userAction";
-import { fetchCartItems } from "./actions/cartAction";
-import { useDispatch, useSelector } from "react-redux";
+// import { fetchCartItems } from "./actions/cartAction";
+// import { useDispatch, useSelector } from "react-redux";
 
 export default function App() {
   // dispatched exactly once when the component is first rendered, and check if
@@ -27,12 +30,12 @@ export default function App() {
     store.dispatch(loadUser());
   }, []);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.auth);
-  if (user) {
-    dispatch(fetchCartItems());
-  }
+  // const { user } = useSelector((state) => state.auth);
+  // if (user) {
+  //   dispatch(fetchCartItems());
+  // }
 
   return (
     <BrowserRouter>
@@ -52,6 +55,11 @@ export default function App() {
               element={<NewPassword />}
             />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/success" element={<OrderSuccess />} />
+            <Route path="/eats/orders/me/myOrders" element={<ListOrders />} />
+            <Route path="/eats/orders/:id" element={<OrderDetails />} />
+            <Route path="*" element={<h1>The page does not exist</h1>} />
+            <Route path="/search/:keyword" element={<Home />} />
           </Routes>
         </div>
 

@@ -13,7 +13,7 @@ import {
     ORDER_DETAILS_SUCCESS,
     CLEAR_ERRORS,
 
-} from "../constants/orderConstants";
+} from "../constants/orderConstant";
 
 export const createOrder = (session_id) => async (dispatch) => {
     try {
@@ -53,7 +53,7 @@ export const payment = (items, restaurnt) => async (dispatch) => {
             config);
 
         if (data.url) {
-            window.loacation.href = data.url;
+            window.location.href = data.url;
         }
     } catch (error) {
         dispatch({
@@ -83,7 +83,7 @@ export const myOrders = () => async (dispatch) => {
     }
 };
 
-export const getnorderDetails = (id) => async (dispatch) => {
+export const getorderDetails = (id) => async (dispatch) => {
     try {
         dispatch({
             type: ORDER_DETAILS_REQUEST,
