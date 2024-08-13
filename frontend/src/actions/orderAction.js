@@ -83,7 +83,7 @@ export const myOrders = () => async (dispatch) => {
     }
 };
 
-export const getorderDetails = (id) => async (dispatch) => {
+export const getOrderDetails = (id) => async (dispatch) => {
     try {
         dispatch({
             type: ORDER_DETAILS_REQUEST,
