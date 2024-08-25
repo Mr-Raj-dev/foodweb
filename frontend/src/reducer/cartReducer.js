@@ -1,66 +1,129 @@
+import axios from "axios";
 import {
     ADD_TO_CART,
-    CLEAR_CART,
     FETCH_CART,
+    UPDATE_CART_ITEM,
     REMOVE_ITEM_CART,
-    UPDATE_CART_ITEM
+    CLEAR_CART,
 } from "../constants/cartConstant";
 
-const initialState = {
-    cartItems: JSON.parse(localStorage.getItem('cart'))?.items || [],
-    restaurant: JSON.parse(localStorage.getItem('cart'))?.restaurant || {},
+// Fetch Cart Items
+export const fetchCartItems = (alert) => async (dispatch) => {
+    try {
+        const response = await axios.get("/api/v1/eats/cart/get-cart");
+        if (response.data && response.data.data) {
+            dispatch({
+                type: FETCH_CART,
+                payload: response.data.data,
+            });
+        } else {
+            console.error("Unexpected response format: ", response);
+            if (alert) {
+                alert.info("Cart is empty or data is not available");
+            }
+        }
+    } catch (error) {
+        console.error("Fetch cart error: ", error);
+        if (alert) {
+            alert.info("Cart is hungry");
+        }
+    }
 };
 
-export const cartReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case ADD_TO_CART:
-            // When items are added to the cart, update the restaurant and cartItems
-            return {
-                ...state,
-                restaurant: action.payload.restaurant || state.restaurant,
-                cartItems: action.payload.items || state.cartItems,
-            };
-
-        case UPDATE_CART_ITEM:
-            // When cart items are updated, replace the cartItems
-            return {
-                ...state,
-                cartItems: action.payload.items || state.cartItems,
-            };
-
-        case FETCH_CART:
-            // When fetching cart, update the restaurant and cartItems with fetched data
-            return {
-                ...state,
-                restaurant: action.payload.restaurant || state.restaurant,
-                cartItems: action.payload.items || state.cartItems,
-            };
-
-        case REMOVE_ITEM_CART:
-            // Handle the removal of an item from the cart
-            if (!action.payload || !action.payload.cart) {
-                // If no cart data provided, clear the cart
-                return {
-                    ...state,
-                    cartItems: []
-                };
-            } else {
-                // Otherwise, update the cart with the provided items
-                return {
-                    ...state,
-                    cartItems: action.payload.cart.items || state.cartItems,
-                };
+// Add Item to Cart
+export const addItemToCart = (foodItemId, restaurant, quantity, alert) => async (dispatch, getState) => {
+    try {
+        const { user } = getState().auth;
+        const response = await axios.post("/api/v1/eats/cart/add-to-cart", {
+            userId: user._id,
+            foodItemId,
+            restaurantId: restaurant,
+            quantity,
+        });
+        if (response.data && response.data.cart) {
+            alert.success("Item added to cart", response.data.cart);
+            dispatch({
+                type: ADD_TO_CART,
+                payload: response.data.cart,
+            });
+        } else {
+            console.error("Unexpected response format: ", response);
+            if (alert) {
+                alert.info("Unable to add item to cart");
             }
-
-        case CLEAR_CART:
-            // Clear all items from the cart
-            return {
-                ...state,
-                cartItems: []
-            };
-
-        default:
-            // Return the current state for unrecognized actions
-            return state;
+        }
+    } catch (error) {
+        console.error("Add to cart error: ", error);
+        if (alert) {
+            alert.error(error.response ? error.response.data.message : error.message);
+        }
     }
+};
+
+// Update Cart Quantity
+export const updateCartQuantity = (foodItemId, quantity, alert) => async (dispatch, getState) => {
+    try {
+        const { user } = getState().auth;
+        if (typeof foodItemId === "object") {
+            foodItemId = foodItemId._id;
+        }
+        const response = await axios.post("/api/v1/eats/cart/update-cart-item", {
+            userId: user._id,
+            foodItemId,
+            quantity,
+        });
+        if (response.data && response.data.cart) {
+            dispatch({
+                type: UPDATE_CART_ITEM,
+                payload: response.data.cart,
+            });
+        } else {
+            console.error("Unexpected response format: ", response);
+            if (alert) {
+                alert.info("Unable to update cart item");
+            }
+        }
+    } catch (error) {
+        console.error("Update cart error: ", error);
+        if (alert) {
+            alert.error(error.response ? error.response.data.message : error.message);
+        }
+    }
+};
+
+// Remove Item from Cart
+export const removeItemFromCart = (foodItemId) => async (dispatch, getState) => {
+    try {
+        const { user } = getState().auth;
+        if (typeof foodItemId === "object") {
+            foodItemId = foodItemId._id;
+        }
+        const response = await axios.delete("/api/v1/eats/cart/delete-cart-item", {
+            data: { userId: user._id, foodItemId },
+        });
+        if (response.data) {
+            dispatch({
+                type: REMOVE_ITEM_CART,
+                payload: response.data,
+            });
+        } else {
+            console.error("Unexpected response format: ", response);
+            if (alert) {
+                alert.info("Unable to remove item from cart");
+            }
+        }
+    } catch (error) {
+        console.error("Remove item from cart error: ", error);
+        if (alert) {
+            alert.error(error.response ? error.response.data.message : error.message);
+        }
+    }
+};
+
+// Clear Cart in Local Storage
+export const clearCart = () => (dispatch) => {
+    localStorage.removeItem('cart'); // Remove cart from local storage
+    dispatch({
+        type: CLEAR_CART, // Clear cart in Redux state
+    });
 };

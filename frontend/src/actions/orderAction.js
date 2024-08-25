@@ -12,12 +12,14 @@ import {
     ORDER_DETAILS_REQUEST,
     ORDER_DETAILS_SUCCESS,
     CLEAR_ERRORS,
+
 } from "../constants/orderConstant";
-import { clearCart } from './cartAction'; // Import the clearCart action
 
 export const createOrder = (session_id) => async (dispatch) => {
     try {
-        dispatch({ type: CREATE_ORDER_REQUEST });
+        dispatch({
+            type: CREATE_ORDER_REQUEST,
+        });
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -28,28 +30,27 @@ export const createOrder = (session_id) => async (dispatch) => {
             type: CREATE_ORDER_SUCCESS,
             payload: data,
         });
-
-        // Clear the cart after successfully creating an order
-        dispatch(clearCart());
-        localStorage.removeItem('cart'); // Remove cart from local storage
-
     } catch (error) {
         dispatch({
             type: CREATE_ORDER_FAIL,
-            payload: error.response.data.message,
+            payload: error.response.data.message
         });
     }
 };
 
-export const payment = (items, restaurant) => async (dispatch) => {
+export const payment = (items, restaurnt) => async (dispatch) => {
     try {
-        dispatch({ type: CREATE_PAYMENT_REQUEST });
+        dispatch({
+            type: CREATE_PAYMENT_REQUEST,
+        });
         const config = {
             headers: {
                 "Content-Type": "application/json",
             },
         };
-        const { data } = await axios.post(`/api/v1/payment/process`, { items, restaurant }, config);
+        const { data } = await axios.post(`/api/v1/payment/process`,
+            { items, restaurnt },
+            config);
 
         if (data.url) {
             window.location.href = data.url;
@@ -57,15 +58,18 @@ export const payment = (items, restaurant) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: CREATE_PAYMENT_FAIL,
-            payload: error.response.data.message,
+            payload: error.response.data.message
         });
     }
 };
 
-// Fetch My Orders
+// myOrders 
+
 export const myOrders = () => async (dispatch) => {
     try {
-        dispatch({ type: MY_ORDERS_REQUEST });
+        dispatch({
+            type: MY_ORDERS_REQUEST,
+        });
         const { data } = await axios.get(`/api/v1/eats/orders/me/myOrders`);
         dispatch({
             type: MY_ORDERS_SUCCESS,
@@ -74,21 +78,23 @@ export const myOrders = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: MY_ORDERS_FAIL,
-            payload: error.response.data.message,
+            payload: error.response.data.message
         });
     }
 };
 
-// Get Order Details
 export const getOrderDetails = (id) => async (dispatch) => {
     try {
-        dispatch({ type: ORDER_DETAILS_REQUEST });
+        dispatch({
+            type: ORDER_DETAILS_REQUEST,
+        });
         const { data } = await axios.get(`/api/v1/eats/orders/${id}`);
         dispatch({
             type: ORDER_DETAILS_SUCCESS,
             payload: data.order,
         });
-    } catch (error) {
+    }
+    catch (error) {
         dispatch({
             type: ORDER_DETAILS_FAIL,
             payload: error.response.data.message,
@@ -96,7 +102,7 @@ export const getOrderDetails = (id) => async (dispatch) => {
     }
 };
 
-// Clear Errors
+// clear errors
 export const clearErrors = () => async (dispatch) => {
     dispatch({
         type: CLEAR_ERRORS,
