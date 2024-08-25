@@ -12,8 +12,8 @@ import {
     ORDER_DETAILS_REQUEST,
     ORDER_DETAILS_SUCCESS,
     CLEAR_ERRORS,
-
 } from "../constants/orderConstant";
+import { clearCart } from './cartAction'; // Import clearCart action
 
 export const createOrder = (session_id) => async (dispatch) => {
     try {
@@ -26,10 +26,14 @@ export const createOrder = (session_id) => async (dispatch) => {
             },
         };
         const { data } = await axios.post(`/api/v1/eats/orders/new`, { session_id }, config);
+
         dispatch({
             type: CREATE_ORDER_SUCCESS,
             payload: data,
         });
+
+        // Dispatch clearCart after a successful order creation
+        dispatch(clearCart());
     } catch (error) {
         dispatch({
             type: CREATE_ORDER_FAIL,

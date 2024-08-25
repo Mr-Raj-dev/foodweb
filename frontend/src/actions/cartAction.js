@@ -120,10 +120,11 @@ export const removeItemFromCart = (foodItemId) => async (dispatch, getState) => 
     }
 };
 
-// Clear Cart in Local Storage
+// cartActions.js
 export const clearCart = () => (dispatch) => {
-    localStorage.removeItem('cart'); // Remove cart from local storage
+    localStorage.removeItem('cart'); // Optionally clear cart from local storage
     dispatch({
-        type: CLEAR_CART, // Clear cart in Redux state
+        type: CLEAR_CART, // Make sure this matches the action type in your reducer
     });
 };
+
