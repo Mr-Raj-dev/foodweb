@@ -9,63 +9,34 @@ import {
 } from "../../actions/cartAction";
 import { payment } from "../../actions/orderAction";
 
-// let cartItems = [
-//   {
-//     foodItem: {
-//       images: [
-//         {
-//           public_id: "kaala_channa_chat image",
-//           url: "https://b.zmtcdn.com/data/dish_photos/94a/c01f4e8fcce05666b8a28eadd627394a.jpg?fit=around|130:130&crop=130:130;*,*",
-//           _id: "1",
-//         },
-//       ],
-//       name: "Kaala Channa Chat",
-//       price: 120,
-//       _id: "123",
-//     },
-//     quantity: 1,
-//     _id: "cart123",
-//   },
-//   {
-//     foodItem: {
-//       images: [
-//         {
-//           public_id: "Pani puri image",
-//           url: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_600/FOOD_CATALOG/IMAGES/CMS/2024/3/11/b3734c76-eba3-4509-86ed-aa774e6336e4_e7abf189-300f-4cc7-bc9b-fc42a24c8178.png_compressed",
-//           _id: "2",
-//         },
-//       ],
-//       name: "Pani puri",
-//       price: 50,
-//       _id: "456",
-//     },
-//     quantity: 1,
-//     _id: "cart456",
-//   },
-// ];
-
 const Cart = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
 
+  // Retrieve cartItems and restaurant from Redux store
   const { cartItems, restaurant } = useSelector((state) => state.cart);
 
+  // Fetch cart items when the component mounts
   useEffect(() => {
     dispatch(fetchCartItems(alert));
   }, [dispatch, alert]);
 
+  // Handler for removing an item from the cart
   const removeCartItemHandler = (id) => {
     dispatch(removeItemFromCart(id, alert));
   };
 
-  const increseQty = (id, quantity, stock) => {
+  // Handler for increasing item quantity
+  const increaseQty = (id, quantity, stock) => {
     const newQty = quantity + 1;
     if (newQty > stock) {
       alert.error("Exceeded stock limit");
+    } else {
+      dispatch(updateCartQuantity(id, newQty, alert));
     }
-    dispatch(updateCartQuantity(id, newQty, alert));
   };
 
+  // Handler for decreasing item quantity
   const decreaseQty = (id, quantity) => {
     if (quantity > 1) {
       const newQty = quantity - 1;
@@ -75,8 +46,11 @@ const Cart = () => {
     }
   };
 
+  // Handler for checking out
   const checkoutHandler = () => {
     dispatch(payment(cartItems, restaurant));
+    // After payment, refetch cart items to reflect changes
+    dispatch(fetchCartItems(alert));
   };
 
   return (
@@ -98,14 +72,12 @@ const Cart = () => {
                 <div className="cart-item" key={item._id}>
                   <div className="row">
                     <div className="col-4 col-lg-3">
-                      {
-                        <img
-                          src={item.foodItem.images[0].url}
-                          alt="items"
-                          height="90"
-                          width="115"
-                        />
-                      }
+                      <img
+                        src={item.foodItem.images[0].url}
+                        alt="items"
+                        height="90"
+                        width="115"
+                      />
                     </div>
                     <div className="col-5 col-lg-3">{item.foodItem.name}</div>
                     <div className="col-4 col-lg-2 mt-4 mt-lg-0">
@@ -118,9 +90,7 @@ const Cart = () => {
                       <div className="stockCounter d-inline">
                         <span
                           className="btn btn-danger minus"
-                          onClick={() =>
-                            decreaseQty(item.foodItem, item.quantity)
-                          }
+                          onClick={() => decreaseQty(item._id, item.quantity)}
                         >
                           -
                         </span>
@@ -133,7 +103,7 @@ const Cart = () => {
                         <span
                           className="btn btn-primary plus"
                           onClick={() =>
-                            increseQty(item.foodItem, item.quantity, item.stock)
+                            increaseQty(item._id, item.quantity, item.stock)
                           }
                         >
                           +
@@ -144,7 +114,7 @@ const Cart = () => {
                       <i
                         id="delete_cart_item"
                         className="fa fa-trash btn btn-danger"
-                        onClick={() => removeCartItemHandler(item.foodItem)}
+                        onClick={() => removeCartItemHandler(item._id)}
                       ></i>
                     </div>
                   </div>

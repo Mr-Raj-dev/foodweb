@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createOrder } from "../../actions/orderAction";
+import { fetchCartItems } from "../../actions/cartAction";
 
 const OrderSuccess = () => {
   const location = useLocation();
@@ -10,7 +11,12 @@ const OrderSuccess = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(createOrder(session_id));
+    if (session_id) {
+      dispatch(createOrder(session_id)).then(() => {
+        // Assuming you have a way to clear the cart or refresh it
+        dispatch(fetchCartItems()); // Optionally fetch updated cart items
+      });
+    }
   }, [dispatch, session_id]);
 
   return (

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { MDBDataTable } from "mdbreact";
-import { FaRegEye } from "react-icons/fa6";
+import { FaRegEye } from "react-icons/fa";
 import Loader from "../layouts/Loader";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,10 +13,7 @@ const ListOrders = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const { loading, error, orders } = useSelector((state) => state.myOrders);
-  const restaurants = useSelector((state) => state.restaurants);
-  const restaurantList = Array.isArray(restaurants.restaurants)
-    ? restaurants.restaurants
-    : [];
+  const { restaurants } = useSelector((state) => state.restaurants);
 
   useEffect(() => {
     dispatch(myOrders());
@@ -30,59 +27,33 @@ const ListOrders = () => {
   const setOrders = () => {
     const data = {
       columns: [
-        {
-          label: "Restaurant Name",
-          field: "restaurant",
-          sort: "asc",
-        },
-        {
-          label: "Order Items",
-          field: "orderItems",
-          sort: "asc",
-        },
-        {
-          label: "Num of Items",
-          field: "numOfItems",
-          sort: "asc",
-        },
-        {
-          label: "Amount",
-          field: "amount",
-          sort: "asc",
-        },
-        {
-          label: "Status",
-          field: "status",
-          sort: "asc",
-        },
-        {
-          label: "Order Date",
-          field: "orderDate",
-          sort: "asc",
-        },
-        {
-          label: "Actions",
-          field: "actions",
-          sort: "asc",
-        },
+        { label: "Restaurant Name", field: "restaurant", sort: "asc" },
+        { label: "Order Items", field: "orderItems", sort: "asc" },
+        { label: "Num of Items", field: "numOfItems", sort: "asc" },
+        { label: "Amount", field: "amount", sort: "asc" },
+        { label: "Status", field: "status", sort: "asc" },
+        { label: "Order Date", field: "orderDate", sort: "asc" },
+        { label: "Actions", field: "actions", sort: "asc" },
       ],
       rows: [],
     };
-    if (orders && orders.length > 0 && restaurantList.length > 0) {
+
+    if (orders && orders.length > 0) {
       const sortedOrders = orders.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
+
       sortedOrders.forEach((order) => {
         const orderItemNames = order.orderItems
           .map((item) => item.name)
           .join(",");
 
-        const restaurant = restaurantList.find(
-          (restaurant) => restaurant._id.toString() === order.restaurant._id
+        const restaurant = restaurants.find(
+          (rest) => rest._id.toString() === order.restaurant._id
         );
 
         data.rows.push({
-          restaurant: restaurant?.name || "unknown Restaurant",
+          restaurant: restaurant?.name || "Unknown Restaurant",
           numOfItems: order.orderItems.length,
           amount: (
             <span>
@@ -90,13 +61,17 @@ const ListOrders = () => {
               {order.finalTotal}
             </span>
           ),
-          status:
-            order.orderStatus &&
-            String(order.orderStatus).includes("Delivered") ? (
-              <p style={{ color: "green" }}>{order.orderStatus}</p>
-            ) : (
-              <p style={{ color: "red" }}>{order.orderStatus}</p>
-            ),
+          status: (
+            <p
+              style={{
+                color: order.orderStatus.includes("Delivered")
+                  ? "green"
+                  : "red",
+              }}
+            >
+              {order.orderStatus}
+            </p>
+          ),
           orderItems: orderItemNames,
           orderDate: new Date(order.createdAt).toLocaleDateString(),
           actions: (
@@ -107,27 +82,25 @@ const ListOrders = () => {
         });
       });
     }
+
     return data;
   };
 
   return (
-    <>
-      <div className="cartt">
-        <h1 className="my-5">My Orders</h1>
-
-        {loading ? (
-          <Loader />
-        ) : (
-          <MDBDataTable
-            data={setOrders()}
-            className="px-3"
-            bordered
-            striped
-            hover
-          />
-        )}
-      </div>
-    </>
+    <div className="cartt">
+      <h1 className="my-5">My Orders</h1>
+      {loading ? (
+        <Loader />
+      ) : (
+        <MDBDataTable
+          data={setOrders()}
+          className="px-3"
+          bordered
+          striped
+          hover
+        />
+      )}
+    </div>
   );
 };
 
