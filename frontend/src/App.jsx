@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
-
+import Search from "./Search";
+import RestaurantPage from "./RestaurantPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/layouts/Header";
 import Home from "./components/layouts/Home";
@@ -58,8 +59,8 @@ export default function App() {
             <Route path="/success" element={<OrderSuccess />} />
             <Route path="/eats/orders/me/myOrders" element={<ListOrders />} />
             <Route path="/eats/orders/:id" element={<OrderDetails />} />
-            <Route path="*" element={<h1>The page does not exist</h1>} />
-            <Route path="/search/:keyword" element={<Home />} />
+            <Route path="/" element={<Search />} />
+            <Route path="/restaurant/:name" element={<RestaurantPage />} />
           </Routes>
         </div>
 
